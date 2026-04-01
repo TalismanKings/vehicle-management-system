@@ -23,7 +23,210 @@
 <body>
 
 <div class="container">
-    <h2>Vehicle Entry</h2>
+    <h2>Veh<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascardi Auto - Fleet Management System</title>
+    <script src="https://tailwindcss.com"></script>
+    <style>
+        .tab-content { display: none; }
+        .active-tab { display: block; }
+        .nav-active { border-bottom: 3px solid #2563eb; color: #2563eb; font-weight: bold; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+
+    <!-- Top Navigation Bar -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-4">
+                    <span class="text-2xl font-bold text-blue-800">MASCARDI AUTO</span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider text-gray-600">
+                    <button onclick="showTab('acquisitions')" class="nav-btn p-2" id="btn-acquisitions">Acquisitions</button>
+                    <button onclick="showTab('pdi')" class="nav-btn p-2" id="btn-pdi">PDI (Selling Point)</button>
+                    <button onclick="showTab('parts')" class="nav-btn p-2" id="btn-parts">Parts Inventory</button>
+                    <button onclick="showTab('fleet')" class="nav-btn p-2 nav-active" id="btn-fleet">Fleet Status</button>
+                    <button onclick="showTab('deliveries')" class="nav-btn p-2" id="btn-deliveries">Deliveries</button>
+                    <button onclick="showTab('finalsum')" class="nav-btn p-2" id="btn-finalsum">Final Sum</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-7xl mx-auto py-8 px-4">
+
+        <!-- 1. ACQUISITIONS TAB -->
+        <section id="acquisitions" class="tab-content">
+            <h2 class="text-2xl font-bold mb-4">Acquisition Pipeline</h2>
+            <div class="bg-white rounded-lg shadow overflow-hidden">
+                <table class="w-full text-left">
+                    <thead class="bg-gray-100 uppercase text-xs">
+                        <tr>
+                            <th class="p-4">Unit Nature</th>
+                            <th class="p-4">Source</th>
+                            <th class="p-4">Purchase Price</th>
+                            <th class="p-4">Est. Value</th>
+                            <th class="p-4">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-sm">
+                        <tr class="border-t">
+                            <td class="p-4">SUV (Land Cruiser 300)</td>
+                            <td class="p-4">Direct Import (Japan)</td>
+                            <td class="p-4">$110,000</td>
+                            <td class="p-4">$135,000</td>
+                            <td class="p-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">Clearing</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- 2. PDI TAB -->
+        <section id="pdi" class="tab-content">
+            <h2 class="text-2xl font-bold mb-4">Mobile PDI (Selling Point)</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow">
+                    <p class="font-bold mb-2">150-Point Inspection Checklist</p>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b pb-2">
+                            <span>Engine Compression</span>
+                            <select class="bg-green-100 text-green-800 rounded p-1"><option>Pass</option><option>Fail</option></select>
+                        </div>
+                        <div class="flex justify-between items-center border-b pb-2 text-red-600">
+                            <span>Brake Pad Thickness</span>
+                            <select class="bg-red-100 text-red-800 rounded p-1"><option>Fail</option><option>Pass</option></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-200 rounded-lg flex items-center justify-center border-dashed border-4 border-gray-400">
+                    <span class="text-gray-500 text-center">[ Mandatory Photo Capture Dropdown ]</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. PARTS TAB -->
+        <section id="parts" class="tab-content">
+            <h2 class="text-2xl font-bold mb-4">Inventory & Parts Stock</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-white p-4 shadow rounded-lg border-l-4 border-green-500">
+                    <p class="text-gray-500">Total Parts in Stock</p>
+                    <p class="text-3xl font-bold">1,240 Units</p>
+                </div>
+                <div class="bg-white p-4 shadow rounded-lg border-l-4 border-yellow-500">
+                    <p class="text-gray-500">Low Stock Alerts</p>
+                    <p class="text-3xl font-bold text-yellow-600">12 Items</p>
+                </div>
+                <div class="bg-white p-4 shadow rounded-lg border-l-4 border-blue-500">
+                    <p class="text-gray-500">Parts Used (MTD)</p>
+                    <p class="text-3xl font-bold text-blue-600">$4,500</p>
+                </div>
+            </div>
+            <div class="bg-white p-4 rounded shadow">
+                <input type="text" placeholder="Search Part (e.g. Brake Pads)..." class="w-full border p-2 rounded mb-4">
+                <p class="text-sm text-gray-400 italic">Dropdown shows compatible VINs and stock quantity instantly.</p>
+            </div>
+        </section>
+
+        <!-- 4. FLEET STATUS TAB (Default) -->
+        <section id="fleet" class="tab-content active-tab">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">MASIS Fleet Status</h2>
+                <div class="relative">
+                    <select class="border p-2 rounded bg-white font-bold">
+                        <option>Unit Nature & Sales Availability</option>
+                        <option>Available / Ready to Sell</option>
+                        <option>Not For Sale - Maintenance</option>
+                        <option>Not For Sale - In Transit</option>
+                    </select>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-2 bg-white p-4 shadow rounded-lg h-64 flex items-center justify-center">
+                    <p class="text-gray-400">[ Interactive Fleet Map View - Live GPS ]</p>
+                </div>
+                <div class="bg-white p-6 shadow rounded-lg">
+                    <h3 class="font-bold mb-4 border-b pb-2 text-blue-800">Sales Readiness Dashboard</h3>
+                    <ul class="space-y-3">
+                        <li class="flex justify-between"><span>Available Units:</span> <span class="font-bold">85</span></li>
+                        <li class="flex justify-between"><span>In Preparation:</span> <span class="font-bold text-yellow-600">14</span></li>
+                        <li class="flex justify-between"><span>Awaiting Delivery:</span> <span class="font-bold text-blue-600">06</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. DELIVERIES TAB -->
+        <section id="deliveries" class="tab-content">
+            <h2 class="text-2xl font-bold mb-4">Post-Delivery (Receiving Point)</h2>
+            <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg">
+                <h3 class="font-bold mb-2">Transit Verification Checklist</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <label class="flex items-center space-x-2"><input type="checkbox"> <span>Spare Key Verified</span></label>
+                    <label class="flex items-center space-x-2"><input type="checkbox"> <span>Logbook Present</span></label>
+                    <label class="flex items-center space-x-2"><input type="checkbox"> <span>Odometer Check (Matches PDI)</span></label>
+                    <label class="flex items-center space-x-2"><input type="checkbox"> <span>Tool Kit / Spare Tire Present</span></label>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. FINAL SUM TAB -->
+        <section id="finalsum" class="tab-content">
+            <h2 class="text-2xl font-bold mb-4">Client Final Sum & ROI Report</h2>
+            <div class="bg-gray-800 text-white p-8 rounded-xl shadow-2xl">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                    <div>
+                        <p class="text-gray-400 uppercase text-xs">Acquisition Total</p>
+                        <p class="text-2xl font-bold">$1,450,000</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 uppercase text-xs">Parts/Labor Invested</p>
+                        <p class="text-2xl font-bold text-green-400">+$12,300</p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 uppercase text-xs">Current Fleet Value</p>
+                        <p class="text-2xl font-bold">$1,680,000</p>
+                    </div>
+                    <div class="bg-blue-700 p-4 rounded-lg">
+                        <p class="text-blue-100 uppercase text-xs font-bold">Value for Money Score</p>
+                        <p class="text-3xl font-black">94.2%</p>
+                    </div>
+                </div>
+                <div class="mt-8 pt-8 border-t border-gray-700 flex justify-between items-center">
+                    <p class="text-sm italic text-gray-500">Authorized by: Mascardi Auto Compliance Engine</p>
+                    <button class="bg-green-600 hover:bg-green-500 px-6 py-2 rounded font-bold transition">Export Final Sum PDF</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function showTab(tabId) {
+            // Hide all tabs
+            const tabs = document.getElementsByClassName('tab-content');
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove('active-tab');
+            }
+            
+            // Remove active style from buttons
+            const btns = document.getElementsByClassName('nav-btn');
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].classList.remove('nav-active');
+            }
+
+            // Show selected tab and highlight button
+            document.getElementById(tabId).classList.add('active-tab');
+            document.getElementById('btn-' + tabId).classList.add('nav-active');
+        }
+    </script>
+</body>
+</html>
+icle Entry</h2>
     
     <div class="form-group">
         <label>Vehicle / VIN Number</label>
