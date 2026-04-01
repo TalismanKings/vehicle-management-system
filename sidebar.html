@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fleetio Black & Purple Sidebar</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --sidebar-width: 280px;
+            --text-color: #b3b3b3;
+            --hover-bg: #1a1a1a;
+            --purple-accent: #a855f7;
+            --purple-badge: #6b21a8;
+        }
+
+        body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #121212; color: white; display: flex; }
+
+        .sidebar { width: var(--sidebar-width); height: 100vh; background-color: var(--bg-color); border-right: 1px solid #222; overflow-y: auto; }
+        
+        .nav-group { padding: 10px 0; }
+        
+        /* Main Item Style */
+        .nav-item { 
+            display: flex; align-items: center; padding: 12px 20px; cursor: pointer; color: var(--text-color); font-size: 14px; transition: 0.2s; 
+        }
+        .nav-item:hover { background-color: var(--hover-bg); color: #fff; }
+        .nav-item i { width: 25px; margin-right: 10px; font-size: 16px; text-align: center; }
+        .nav-item .arrow { margin-left: auto; font-size: 10px; transition: transform 0.3s; }
+
+        /* Dropdown Logic */
+        .dropdown-container { display: none; background-color: #0a0a0a; }
+        .dropdown-item { padding: 10px 20px 10px 55px; font-size: 13px; color: #888; cursor: pointer; display: block; text-decoration: none; }
+        .dropdown-item:hover { color: var(--purple-accent); background-color: #151515; }
+
+        /* Toggle Classes */
+        .active .arrow { transform: rotate(90deg); }
+        .active + .dropdown-container { display: block; }
+
+        .badge { background: var(--purple-badge); color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; margin-left: 8px; font-weight: bold; }
+
+        /* Main Content Area */
+        .main-content { flex: 1; padding: 40px; overflow-y: auto; }
+        .main-content h1 { color: var(--purple-accent); margin-top: 0; }
+        .main-content p { color: var(--text-color); line-height: 1.6; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <div class="nav-group">
+        <div class="nav-item"><i class="fa-solid fa-gauge"></i> Dashboard</div>
+
+        <!-- Vehicles -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-car"></i> Vehicles <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Vehicle List</a>
+            <a class="dropdown-item">Assignments</a>
+            <a class="dropdown-item">Meter History</a>
+            <a class="dropdown-item">Expense History</a>
+        </div>
+
+        <!-- Tools -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-screwdriver-wrench"></i> Tools <span class="badge">TRY</span> <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Tool List</a>
+            <a class="dropdown-item">Tool Assignments</a>
+        </div>
+
+        <!-- Inspections -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-clipboard-check"></i> Inspections <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Inspection History</a>
+            <a class="dropdown-item">Item Failures</a>
+            <a class="dropdown-item">Forms</a>
+            <a class="dropdown-item">Schedules</a>
+        </div>
+
+        <!-- Issues -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-triangle-exclamation"></i> Issues <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Issue List</a>
+            <a class="dropdown-item">Faults</a>
+            <a class="dropdown-item">Recalls</a>
+        </div>
+
+        <!-- Reminders -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-bell"></i> Reminders <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Service Reminders</a>
+            <a class="dropdown-item">Vehicle Renewals</a>
+            <a class="dropdown-item">Contact Renewals</a>
+        </div>
+
+        <!-- Service -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-wrench"></i> Service <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Service History</a>
+            <a class="dropdown-item">Work Orders</a>
+            <a class="dropdown-item">Service Programs</a>
+            <a class="dropdown-item">Service Tasks</a>
+        </div>
+
+        <div class="nav-item"><i class="fa-solid fa-address-book"></i> Contacts</div>
+        <div class="nav-item"><i class="fa-solid fa-building"></i> Vendors</div>
+
+        <!-- Parts & Inventory -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-box"></i> Parts & Inventory <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Part List</a>
+            <a class="dropdown-item">Purchase Orders</a>
+            <a class="dropdown-item">Inventory Adjustments</a>
+        </div>
+
+        <!-- Fuel & Energy -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-gas-pump"></i> Fuel & Energy <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Fuel History</a>
+            <a class="dropdown-item">Fuel Integrations</a>
+            <a class="dropdown-item">EV Charging</a>
+        </div>
+
+        <div class="nav-item"><i class="fa-solid fa-location-dot"></i> Places</div>
+        <div class="nav-item"><i class="fa-solid fa-file"></i> Documents</div>
+
+        <!-- Reports -->
+        <div class="nav-item" onclick="toggleMenu(this)"><i class="fa-solid fa-chart-bar"></i> Reports <i class="fa-solid fa-chevron-right arrow"></i></div>
+        <div class="dropdown-container">
+            <a class="dropdown-item">Standard Reports</a>
+            <a class="dropdown-item">Custom Reports</a>
+            <a class="dropdown-item">Exported Reports</a>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <h1>Welcome to Fleetio Dashboard</h1>
+    <p>Select an option from the sidebar to view your fleet management data. This dashboard provides comprehensive tools for managing vehicles, services, inspections, and more.</p>
+</div>
+
+<script>
+    function toggleMenu(element) {
+        element.classList.toggle('active');
+    }
+</script>
+
+</body>
+</html>
