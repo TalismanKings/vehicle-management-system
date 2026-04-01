@@ -1,1 +1,57 @@
+<!-- INVENTORY TAB -->
+<section id="inventory" class="tab-content">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Left: Search & Stock Control (Web View) -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="card p-6">
+                <h3 class="font-bold text-slate-900 mb-4">Stock Master List</h3>
+                <div class="relative mb-6">
+                    <input type="text" placeholder="Search by Part Name or SKU..." class="w-full bg-slate-50 border border-slate-200 pl-10 pr-4 py-3 rounded-xl focus:ring-2 focus:ring-blue-500 outline-none transition">
+                    <span class="absolute left-3 top-3.5 text-slate-400">🔍</span>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center p-3 hover:bg-slate-50 rounded-lg transition border-b border-slate-50">
+                        <div>
+                            <p class="font-semibold text-sm">Synthetic Engine Oil (5L)</p>
+                            <p class="text-[10px] text-slate-400 uppercase font-bold tracking-widest">SKU: LUB-9920</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="font-bold">42 Units</p>
+                            <span class="text-[10px] text-emerald-500 font-bold">IN STOCK</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Mobile Scanner Prototype (Mobile View) -->
+        <div class="card bg-slate-900 text-white p-6 border-none shadow-2xl relative overflow-hidden">
+            <div class="relative z-10">
+                <div class="flex justify-between items-center mb-10">
+                    <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Mobile Scanner</span>
+                    <span class="h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+                </div>
+                
+                <!-- Simulated Scanner Viewport -->
+                <div class="aspect-[9/16] bg-slate-800 rounded-2xl border-2 border-white/20 flex flex-col items-center justify-center relative overflow-hidden">
+                    <div class="absolute inset-0 opacity-30 bg-[radial-gradient(circle,_#ffffff_1px,_transparent_1px)] bg-[size:20px_20px]"></div>
+                    <div class="w-48 h-48 border-2 border-blue-500 rounded-xl flex items-center justify-center relative">
+                        <div class="absolute top-0 left-0 w-4 h-4 border-t-4 border-l-4 border-blue-500 -mt-1 -ml-1"></div>
+                        <div class="absolute top-0 right-0 w-4 h-4 border-t-4 border-r-4 border-blue-500 -mt-1 -mr-1"></div>
+                        <div class="absolute bottom-0 left-0 w-4 h-4 border-b-4 border-l-4 border-blue-500 -mb-1 -ml-1"></div>
+                        <div class="absolute bottom-0 right-0 w-4 h-4 border-b-4 border-r-4 border-blue-500 -mb-1 -mr-1"></div>
+                        <div class="w-full h-0.5 bg-blue-500/50 shadow-[0_0_15px_#3b82f6] animate-bounce"></div>
+                    </div>
+                    <p class="mt-8 text-xs font-medium text-slate-400">Align Barcode within Frame</p>
+                </div>
+
+                <div class="mt-8">
+                    <button class="w-full bg-blue-600 py-4 rounded-xl font-bold hover:bg-blue-500 transition">Confirm Part Usage</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
 
