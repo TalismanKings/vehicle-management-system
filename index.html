@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Vehicle Management System</h1>
+    <table id="vehicleTable">
+        <tr>
+            <th>Vehicle ID</th>
+            <th>Make</th>
+            <th>Model</th>
+            <th>Year</th>
+        </tr>
+    </table>
+    <script>
+        const vehicles = [
+            {id: 1, make: 'Toyota', model: 'Corolla', year: 2020},
+            {id: 2, make: 'Honda', model: 'Civic', year: 2021},
+            {id: 3, make: 'Ford', model: 'Mustang', year: 2022}
+        ];
+
+        const vehicleTable = document.getElementById('vehicleTable');
+
+        vehicles.forEach(vehicle => {
+            const row = vehicleTable.insertRow();
+            row.insertCell(0).innerText = vehicle.id;
+            row.insertCell(1).innerText = vehicle.make;
+            row.insertCell(2).innerText = vehicle.model;
+            row.insertCell(3).innerText = vehicle.year;
+        });
+    </script>
+</body>
+</html>
