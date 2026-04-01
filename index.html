@@ -4,49 +4,101 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vehicle Management System</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root { --primary: #2563eb; --bg: #f8fafc; }
+        body { font-family: sans-serif; background: var(--bg); margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        h2 { border-bottom: 2px solid var(--primary); padding-bottom: 10px; color: #1e293b; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
+        button:hover { opacity: 0.9; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #f1f5f9; }
+        .badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; background: #dcfce7; color: #166534; }
+    </style>
 </head>
 <body>
-    <h1>Vehicle Management System</h1>
-    <form id="vehicle-entry-form">
-        <h2>Vehicle Entry</h2>
-        <label for="vehicle-name">Vehicle Name:</label>
-        <input type="text" id="vehicle-name" name="vehicle-name" required>
-        <label for="vehicle-type">Vehicle Type:</label>
-        <input type="text" id="vehicle-type" name="vehicle-type" required>
-        <button type="submit">Add Vehicle</button>
-    </form>
 
-    <section id="pdi-jcard">
-        <h2>PDI J/Card</h2>
-        <p>Details about PDI J/Card would go here.</p>
-    </section>
+<div class="container">
+    <h2>(1) Vehicle Entry & (2) PDI J/Card</h2>
+    
+    <div class="form-group">
+        <label>Vehicle / VIN Number</label>
+        <input type="text" id="vin" placeholder="Enter VIN or Vehicle ID">
+    </div>
 
-    <section id="repair-notes">
-        <h2>Repair Notes</h2>
-        <textarea id="repair-notes-input" placeholder="Enter repair notes here..."></textarea>
-    </section>
+    <div class="form-group">
+        <label>Purchase Company</label>
+        <input type="text" id="company" placeholder="e.g. Auction House X">
+    </div>
 
-    <section id="system-logs">
-        <h2>System Logs</h2>
-        <table id="logs-table">
-            <thead>
-                <tr>
-                    <th>Date</th>
-                    <th>Action</th>
-                    <th>User</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>2026-04-01</td>
-                    <td>Vehicle Added</td>
-                    <td>Admin</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <div class="form-group">
+        <label>PDI Status (Job Card)</label>
+        <select id="status">
+            <option value="Pending">Pending Inspection</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Completed">Completed</option>
+        </select>
+    </div>
 
-    <script src="script.js"></script>
+    <div class="form-group">
+        <label>Repair Notes (Lost Repair)</label>
+        <textarea id="notes" rows="3" placeholder="Document any missed repairs..."></textarea>
+    </div>
+
+    <button onclick="addEntry()">Log Entry (Save to System)</button>
+
+    <hr style="margin: 30px 0;">
+
+    <h2>(3) System Logs</h2>
+    <table id="logTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Vehicle/Company</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Entries will appear here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+    let entryCount = 1;
+
+    function addEntry() {
+        const vin = document.getElementById('vin').value;
+        const company = document.getElementById('company').value;
+        const status = document.getElementById('status').value;
+        const date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).toUpperCase();
+        
+        if(!vin) return alert("Please enter a Vehicle ID");
+
+        const table = document.getElementById('logTable').getElementsByTagName('tbody')[0];
+        const row = table.insertRow(0);
+
+        // Format ID like your notes: 0001, 0002...
+        const formattedId = String(entryCount).padStart(4, '0');
+
+        row.innerHTML = `
+            <td>${formattedId}</td>
+            <td><strong>${vin}</strong><br><small>${company}</small></td>
+            <td>${date}</td>
+            <td><span class=\"badge\">${status}</span></td>
+        `;
+
+        entryCount++;
+        // Clear form
+        document.getElementById('vin').value = '';
+        document.getElementById('notes').value = '';
+    }
+</script>
+
 </body>
 </html>
