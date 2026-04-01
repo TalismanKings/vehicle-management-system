@@ -3,202 +3,121 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vehicle Management System</title>
+    <title>Mascardi Auto | Fleet Intelligence</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://googleapis.com" rel="stylesheet">
     <style>
-        :root { --primary: #2563eb; --bg: #f8fafc; }
-        body { font-family: sans-serif; background: var(--bg); margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        h2 { border-bottom: 2px solid var(--primary); padding-bottom: 10px; color: #1e293b; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { background: var(--primary); color: white; border: none; padding: 12px 20px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 16px; }
-        button:hover { opacity: 0.9; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background: #f1f5f9; }
-        .badge { padding: 4px 8px; border-radius: 12px; font-size: 12px; background: #dcfce7; color: #166534; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .sidebar { background-color: #0f172a; width: 240px; height: 100vh; position: fixed; left: 0; top: 0; }
+        .main-content { margin-left: 240px; padding: 40px; }
+        .tab-content { display: none; }
+        .active-tab { display: block; }
+        .nav-item { color: #94a3b8; transition: all 0.2s; cursor: pointer; padding: 12px 24px; border-radius: 8px; margin: 4px 16px; display: flex; align-items: center; }
+        .nav-item:hover, .nav-active { color: white; background-color: #1e293b; }
+        .progress-bar { height: 8px; border-radius: 4px; background: #e2e8f0; position: relative; overflow: hidden; }
+        .progress-fill { height: 100%; border-radius: 4px; transition: width 0.5s ease-out; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Veh<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mascardi Auto - Fleet Management System</title>
-    <script src="https://tailwindcss.com"></script>
-    <style>
-        .tab-content { display: none; }
-        .active-tab { display: block; }
-        .nav-active { border-bottom: 3px solid #2563eb; color: #2563eb; font-weight: bold; }
-    </style>
-</head>
-<body class="bg-gray-50 font-sans">
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="sidebar">
+        <div class="p-8">
+            <span class="text-white text-xl font-bold tracking-tight italic">Mascardi</span>
+        </div>
+        <nav class="mt-4">
+            <div onclick="showTab('fleet')" class="nav-item nav-active" id="btn-fleet"><span>Dashboard</span></div>
+            <div onclick="showTab('acquisitions')" class="nav-item" id="btn-acquisitions"><span>Acquisitions</span></div>
+            <div onclick="showTab('inventory')" class="nav-item" id="btn-inventory"><span>Inventory</span></div>
+            <div onclick="showTab('deliveries')" class="nav-item" id="btn-deliveries"><span>Logistics</span></div>
+            <div onclick="showTab('finalsum')" class="nav-item" id="btn-finalsum"><span>Analytics</span></div>
+        </nav>
+    </aside>
 
-    <!-- Top Navigation Bar -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex justify-between items-center h-16">
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+        
+        <!-- DASHBOARD / FLEET STATUS -->
+        <section id="fleet" class="tab-content active-tab">
+            <div class="flex justify-between items-center mb-8">
+                <h1 class="text-2xl font-bold text-slate-800">Mascardi Fleet Intelligence</h1>
                 <div class="flex items-center space-x-4">
-                    <span class="text-2xl font-bold text-blue-800">MASCARDI AUTO</span>
-                </div>
-                <div class="hidden md:flex space-x-8 text-sm uppercase tracking-wider text-gray-600">
-                    <button onclick="showTab('acquisitions')" class="nav-btn p-2" id="btn-acquisitions">Acquisitions</button>
-                    <button onclick="showTab('pdi')" class="nav-btn p-2" id="btn-pdi">PDI (Selling Point)</button>
-                    <button onclick="showTab('parts')" class="nav-btn p-2" id="btn-parts">Parts Inventory</button>
-                    <button onclick="showTab('fleet')" class="nav-btn p-2 nav-active" id="btn-fleet">Fleet Status</button>
-                    <button onclick="showTab('deliveries')" class="nav-btn p-2" id="btn-deliveries">Deliveries</button>
-                    <button onclick="showTab('finalsum')" class="nav-btn p-2" id="btn-finalsum">Final Sum</button>
+                    <button class="bg-white border p-2 rounded shadow-sm">🔔</button>
+                    <div class="bg-slate-200 h-10 w-10 rounded-full flex items-center justify-center font-bold text-slate-600">GM</div>
                 </div>
             </div>
-        </div>
-    </nav>
 
-    <main class="max-w-7xl mx-auto py-8 px-4">
+            <!-- UNIT AVAILABILITY CARD -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 p-8 mb-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-semibold text-slate-700">Unit Availability Breakdown</h3>
+                    <select class="text-xs bg-slate-50 border rounded px-3 py-1.5 font-medium text-slate-600">
+                        <option>Current Fleet Status</option>
+                    </select>
+                </div>
+                
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between text-sm font-medium mb-2"><span>Ready for Sale</span><span>85 Units</span></div>
+                        <div class="progress-bar"><div class="progress-fill bg-emerald-500" style="width: 85%;"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm font-medium mb-2"><span>In Preparation (Workshop)</span><span>28 Units</span></div>
+                        <div class="progress-bar"><div class="progress-fill bg-amber-400" style="width: 28%;"></div></div>
+                    </div>
+                    <div>
+                        <div class="flex justify-between text-sm font-medium mb-2"><span>Service Required (Offline)</span><span>7 Units</span></div>
+                        <div class="progress-bar"><div class="progress-fill bg-rose-500" style="width: 7%;"></div></div>
+                    </div>
+                </div>
+            </div>
 
-        <!-- 1. ACQUISITIONS TAB -->
-        <section id="acquisitions" class="tab-content">
-            <h2 class="text-2xl font-bold mb-4">Acquisition Pipeline</h2>
-            <div class="bg-white rounded-lg shadow overflow-hidden">
+            <!-- REFINED MAINTENANCE HISTORY -->
+            <div class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden">
+                <div class="p-6 border-b border-slate-50 bg-slate-50/30">
+                    <h3 class="font-semibold text-slate-700 text-sm">Refined Maintenance History</h3>
+                </div>
                 <table class="w-full text-left">
-                    <thead class="bg-gray-100 uppercase text-xs">
+                    <thead class="bg-slate-50 text-[10px] uppercase font-bold text-slate-400 tracking-wider">
                         <tr>
-                            <th class="p-4">Unit Nature</th>
-                            <th class="p-4">Source</th>
-                            <th class="p-4">Purchase Price</th>
-                            <th class="p-4">Est. Value</th>
-                            <th class="p-4">Status</th>
+                            <th class="px-8 py-4">Unit ID (VIN)</th>
+                            <th class="px-8 py-4">Service Type</th>
+                            <th class="px-8 py-4">Work Date</th>
+                            <th class="px-8 py-4">Assigned Technician</th>
+                            <th class="px-8 py-4">Status</th>
                         </tr>
                     </thead>
-                    <tbody class="text-sm">
-                        <tr class="border-t">
-                            <td class="p-4">SUV (Land Cruiser 300)</td>
-                            <td class="p-4">Direct Import (Japan)</td>
-                            <td class="p-4">$110,000</td>
-                            <td class="p-4">$135,000</td>
-                            <td class="p-4"><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">Clearing</span></td>
+                    <tbody class="text-sm divide-y divide-slate-100 text-slate-600">
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-8 py-4 font-medium">Mascardi-2830</td>
+                            <td class="px-8 py-4">Brake System</td>
+                            <td class="px-8 py-4">Oct 26, 2023</td>
+                            <td class="px-8 py-4">D. Johnson</td>
+                            <td class="px-8 py-4"><span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[11px] font-bold">Completed</span></td>
+                        </tr>
+                        <tr class="hover:bg-slate-50">
+                            <td class="px-8 py-4 font-medium">Mascardi-3991</td>
+                            <td class="px-8 py-4">Diagnostic Check</td>
+                            <td class="px-8 py-4">Oct 25, 2023</td>
+                            <td class="px-8 py-4">B. Wright</td>
+                            <td class="px-8 py-4"><span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-[11px] font-bold">In Progress</span></td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
 
-        <!-- 2. PDI TAB -->
-        <section id="pdi" class="tab-content">
-            <h2 class="text-2xl font-bold mb-4">Mobile PDI (Selling Point)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <p class="font-bold mb-2">150-Point Inspection Checklist</p>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center border-b pb-2">
-                            <span>Engine Compression</span>
-                            <select class="bg-green-100 text-green-800 rounded p-1"><option>Pass</option><option>Fail</option></select>
-                        </div>
-                        <div class="flex justify-between items-center border-b pb-2 text-red-600">
-                            <span>Brake Pad Thickness</span>
-                            <select class="bg-red-100 text-red-800 rounded p-1"><option>Fail</option><option>Pass</option></select>
-                        </div>
-                    </div>
-                </div>
-                <div class="bg-gray-200 rounded-lg flex items-center justify-center border-dashed border-4 border-gray-400">
-                    <span class="text-gray-500 text-center">[ Mandatory Photo Capture Dropdown ]</span>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. PARTS TAB -->
-        <section id="parts" class="tab-content">
-            <h2 class="text-2xl font-bold mb-4">Inventory & Parts Stock</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div class="bg-white p-4 shadow rounded-lg border-l-4 border-green-500">
-                    <p class="text-gray-500">Total Parts in Stock</p>
-                    <p class="text-3xl font-bold">1,240 Units</p>
-                </div>
-                <div class="bg-white p-4 shadow rounded-lg border-l-4 border-yellow-500">
-                    <p class="text-gray-500">Low Stock Alerts</p>
-                    <p class="text-3xl font-bold text-yellow-600">12 Items</p>
-                </div>
-                <div class="bg-white p-4 shadow rounded-lg border-l-4 border-blue-500">
-                    <p class="text-gray-500">Parts Used (MTD)</p>
-                    <p class="text-3xl font-bold text-blue-600">$4,500</p>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded shadow">
-                <input type="text" placeholder="Search Part (e.g. Brake Pads)..." class="w-full border p-2 rounded mb-4">
-                <p class="text-sm text-gray-400 italic">Dropdown shows compatible VINs and stock quantity instantly.</p>
-            </div>
-        </section>
-
-        <!-- 4. FLEET STATUS TAB (Default) -->
-        <section id="fleet" class="tab-content active-tab">
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold">MASIS Fleet Status</h2>
-                <div class="relative">
-                    <select class="border p-2 rounded bg-white font-bold">
-                        <option>Unit Nature & Sales Availability</option>
-                        <option>Available / Ready to Sell</option>
-                        <option>Not For Sale - Maintenance</option>
-                        <option>Not For Sale - In Transit</option>
-                    </select>
-                </div>
-            </div>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 bg-white p-4 shadow rounded-lg h-64 flex items-center justify-center">
-                    <p class="text-gray-400">[ Interactive Fleet Map View - Live GPS ]</p>
-                </div>
-                <div class="bg-white p-6 shadow rounded-lg">
-                    <h3 class="font-bold mb-4 border-b pb-2 text-blue-800">Sales Readiness Dashboard</h3>
-                    <ul class="space-y-3">
-                        <li class="flex justify-between"><span>Available Units:</span> <span class="font-bold">85</span></li>
-                        <li class="flex justify-between"><span>In Preparation:</span> <span class="font-bold text-yellow-600">14</span></li>
-                        <li class="flex justify-between"><span>Awaiting Delivery:</span> <span class="font-bold text-blue-600">06</span></li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- 5. DELIVERIES TAB -->
-        <section id="deliveries" class="tab-content">
-            <h2 class="text-2xl font-bold mb-4">Post-Delivery (Receiving Point)</h2>
-            <div class="bg-blue-50 border border-blue-200 p-6 rounded-lg">
-                <h3 class="font-bold mb-2">Transit Verification Checklist</h3>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <label class="flex items-center space-x-2"><input type="checkbox"> <span>Spare Key Verified</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox"> <span>Logbook Present</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox"> <span>Odometer Check (Matches PDI)</span></label>
-                    <label class="flex items-center space-x-2"><input type="checkbox"> <span>Tool Kit / Spare Tire Present</span></label>
-                </div>
-            </div>
-        </section>
-
-        <!-- 6. FINAL SUM TAB -->
+        <!-- OTHER TABS (Placeholder Layouts) -->
         <section id="finalsum" class="tab-content">
-            <h2 class="text-2xl font-bold mb-4">Client Final Sum & ROI Report</h2>
-            <div class="bg-gray-800 text-white p-8 rounded-xl shadow-2xl">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
-                    <div>
-                        <p class="text-gray-400 uppercase text-xs">Acquisition Total</p>
-                        <p class="text-2xl font-bold">$1,450,000</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-400 uppercase text-xs">Parts/Labor Invested</p>
-                        <p class="text-2xl font-bold text-green-400">+$12,300</p>
-                    </div>
-                    <div>
-                        <p class="text-gray-400 uppercase text-xs">Current Fleet Value</p>
-                        <p class="text-2xl font-bold">$1,680,000</p>
-                    </div>
-                    <div class="bg-blue-700 p-4 rounded-lg">
-                        <p class="text-blue-100 uppercase text-xs font-bold">Value for Money Score</p>
-                        <p class="text-3xl font-black">94.2%</p>
-                    </div>
+            <h1 class="text-2xl font-bold mb-8">Executive Analytics</h1>
+            <div class="bg-slate-900 text-white p-12 rounded-2xl flex justify-between items-center">
+                <div>
+                    <p class="text-slate-400 text-xs font-bold uppercase mb-2 tracking-widest">Total Fleet ROI</p>
+                    <p class="text-5xl font-extrabold">+12.4%</p>
                 </div>
-                <div class="mt-8 pt-8 border-t border-gray-700 flex justify-between items-center">
-                    <p class="text-sm italic text-gray-500">Authorized by: Mascardi Auto Compliance Engine</p>
-                    <button class="bg-green-600 hover:bg-green-500 px-6 py-2 rounded font-bold transition">Export Final Sum PDF</button>
+                <div class="text-right">
+                    <p class="text-slate-400 text-xs font-bold uppercase mb-2 tracking-widest">Landed Asset Value</p>
+                    <p class="text-4xl font-bold">$1.68M</p>
                 </div>
             </div>
         </section>
@@ -207,101 +126,14 @@
 
     <script>
         function showTab(tabId) {
-            // Hide all tabs
             const tabs = document.getElementsByClassName('tab-content');
-            for (let i = 0; i < tabs.length; i++) {
-                tabs[i].classList.remove('active-tab');
-            }
-            
-            // Remove active style from buttons
-            const btns = document.getElementsByClassName('nav-btn');
-            for (let i = 0; i < btns.length; i++) {
-                btns[i].classList.remove('nav-active');
-            }
-
-            // Show selected tab and highlight button
+            for (let i = 0; i < tabs.length; i++) tabs[i].classList.remove('active-tab');
+            const btns = document.querySelectorAll('.nav-item');
+            btns.forEach(btn => btn.classList.remove('nav-active'));
             document.getElementById(tabId).classList.add('active-tab');
             document.getElementById('btn-' + tabId).classList.add('nav-active');
         }
     </script>
 </body>
 </html>
-icle Entry</h2>
-    
-    <div class="form-group">
-        <label>Vehicle / VIN Number</label>
-        <input type="text" id="vin" placeholder="Enter VIN or Vehicle ID">
-    </div>
 
-    <div class="form-group">
-        <label>Purchase Company</label>
-        <input type="text" id="company" placeholder="e.g. Auction House X">
-    </div>
-
-    <div class="form-group">
-        <label>PDI Status (Job Card)</label>
-        <select id="status">
-            <option value="Pending">Pending Inspection</option>
-            <option value="In Progress">In Progress</option>
-            <option value="Completed">Completed</option>
-        </select>
-    </div>
-
-    <div class="form-group">
-        <label>Repair Notes (Lost Repair)</label>
-        <textarea id="notes" rows="3" placeholder="Document any missed repairs..."></textarea>
-    </div>
-
-    <button onclick="addEntry()">Log Entry (Save to System)</button>
-
-    <hr style="margin: 30px 0;">
-
-    <h2>(3) System Logs</h2>
-    <table id="logTable">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Vehicle/Company</th>
-                <th>Date</th>
-                <th>Status</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Entries will appear here -->
-        </tbody>
-    </table>
-</div>
-
-<script>
-    let entryCount = 1;
-
-    function addEntry() {
-        const vin = document.getElementById('vin').value;
-        const company = document.getElementById('company').value;
-        const status = document.getElementById('status').value;
-        const date = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short' }).toUpperCase();
-        
-        if(!vin) return alert("Please enter a Vehicle ID");
-
-        const table = document.getElementById('logTable').getElementsByTagName('tbody')[0];
-        const row = table.insertRow(0);
-
-        // Format ID like your notes: 0001, 0002...
-        const formattedId = String(entryCount).padStart(4, '0');
-
-        row.innerHTML = `
-            <td>${formattedId}</td>
-            <td><strong>${vin}</strong><br><small>${company}</small></td>
-            <td>${date}</td>
-            <td><span class=\"badge\">${status}</span></td>
-        `;
-
-        entryCount++;
-        // Clear form
-        document.getElementById('vin').value = '';
-        document.getElementById('notes').value = '';
-    }
-</script>
-
-</body>
-</html>
